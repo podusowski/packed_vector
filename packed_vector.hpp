@@ -81,7 +81,10 @@ private:
     {
         auto* new_storage = allocate_new(new_size);
         if (_storage)
+        {
             std::copy(_storage->_begin, _storage->_end, new_storage->_begin);
+            ::operator delete(_storage);
+        }
         _storage = new_storage;
     }
 
