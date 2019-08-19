@@ -3,7 +3,7 @@
 #include <new>
 
 template<class T>
-struct header
+struct metadata_t
 {
     T* _begin;
     T* _end;
@@ -30,6 +30,16 @@ struct packed_vector
         std::copy(std::begin(values), std::end(values), begin());
     }
 
+    //template<class It>
+    //packed_vector(It&& begin, It&& end)
+    //{
+    //    std::copy(std::begin(values), std::end(values), std::back_inserter(*this));
+    //}
+
+    void push_back(T value)
+    {
+    }
+
     iterator begin()
     {
         if (_storage)
@@ -53,13 +63,13 @@ private:
 
     void reallocate(std::size_t new_size)
     {
-        void* st = ::operator new(new_size * sizeof(T) + sizeof(header<T>));
-        _storage = new (st) header<T>{};
-        _storage->_begin = new (next<header<T>>(_storage)) T[new_size];
+        void* st = ::operator new(new_size * sizeof(T) + sizeof(metadata_t<T>));
+        _storage = new (st) metadata_t<T>{};
+        _storage->_begin = new (next<metadata_t<T>>(_storage)) T[new_size];
         _storage->_end = std::next(_storage->_begin, new_size);
     }
 
-    header<T>* _storage;
+    metadata_t<T>* _storage;
 };
 
 // the main reason why you might be interested in this class

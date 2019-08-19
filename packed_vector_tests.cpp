@@ -25,3 +25,13 @@ TEST_CASE("some basics on few elements")
     REQUIRE(*std::next(begin, 2) == 3);
     REQUIRE(std::next(begin, 3) == v.end());
 }
+
+TEST_CASE("dynamic insert")
+{
+    packed_vector<int> v;
+    REQUIRE(v.begin() == v.end());
+
+    v.push_back(1);
+    REQUIRE(v.begin() != v.end());
+    REQUIRE(*std::begin(v) == 1);
+}
