@@ -17,15 +17,20 @@ TEST_CASE("some basics on one element")
     REQUIRE(*std::begin(v) == 1);
 }
 
-TEST_CASE("some basics on few elements")
+void check_three_elements(packed_vector<int>& v)
 {
-    packed_vector<int> v{1, 2, 3};
     REQUIRE(v.size() == 3);
     auto begin = v.begin();
     REQUIRE(*begin == 1);
     REQUIRE(*std::next(begin) == 2);
     REQUIRE(*std::next(begin, 2) == 3);
     REQUIRE(std::next(begin, 3) == v.end());
+}
+
+TEST_CASE("some basics on few elements")
+{
+    packed_vector<int> v{1, 2, 3};
+    check_three_elements(v);
 }
 
 TEST_CASE("dynamic insert")

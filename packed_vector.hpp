@@ -3,16 +3,15 @@
 #include <new>
 
 template<class T>
-struct metadata_t
-{
-    T* _begin;
-    T* _end;
-};
-
-template<class T>
 struct packed_vector
 {
     using iterator = T*;
+
+    struct metadata_t
+    {
+        T* _begin;
+        T* _end;
+    };
 
     packed_vector() : _storage(nullptr)
     {
@@ -24,7 +23,7 @@ struct packed_vector
             operator delete(_storage);
     }
 
-    packed_vector(std::initializer_list<T>&& values)
+    packed_vector(std::initializer_list<T>&& values) : packed_vector()
     {
         reallocate(values.size());
         std::copy(std::begin(values), std::end(values), begin());
@@ -68,11 +67,11 @@ private:
         return std::next(reinterpret_cast<E*>(p));
     }
 
-    metadata_t<T>* allocate_new(std::size_t size)
+    metadata_t* allocate_new(std::size_t size)
     {
-        void* raw = ::operator new(size * sizeof(T) + sizeof(metadata_t<T>));
-        metadata_t<T>* storage = new (raw) metadata_t<T>{};
-        storage->_begin = new (next<metadata_t<T>>(storage)) T[size];
+        void* raw = ::operator new(size * sizeof(T) + sizeof(metadata_t));
+        metadata_t* storage = new (raw) metadata_t{};
+        storage->_begin = new (next<metadata_t>(storage)) T[size];
         storage->_end = std::next(storage->_begin, size);
         return storage;
     }
@@ -85,7 +84,7 @@ private:
         _storage = new_storage;
     }
 
-    metadata_t<T>* _storage;
+    metadata_t* _storage;
 };
 
 // the main reason why you might be interested in this class
