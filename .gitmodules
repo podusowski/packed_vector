@@ -1,0 +1,3 @@
+[submodule "plyometrics"]
+	path = plyometrics
+	url = https://github.com/nokia/plyometrics.git
