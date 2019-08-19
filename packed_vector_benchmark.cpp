@@ -14,6 +14,17 @@ NBENCHMARK_P(constructing_empty, vectors_spec)
     }
 }
 
+NBENCHMARK_P(constructing_many, vectors_spec)
+{
+    auto sequence_data = plyometrics::sequence_range(1024);
+
+    while (loop)
+    {
+        auto v = loop.type(sequence_data.begin(), sequence_data.end());
+        plyometrics::use(v.begin());
+    }
+}
+
 NBENCHMARK_P(iterating_empty, vectors_spec)
 {
     auto v = loop.type();
