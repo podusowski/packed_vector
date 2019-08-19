@@ -19,23 +19,19 @@ NBENCHMARK_P(iterating_empty, vectors_spec)
     auto v = loop.type();
 
     while (loop)
-    {
         for (auto e : v)
             plyometrics::use(&e);
-    }
 }
 
-//NBENCHMARK_P(iterating_many, vectors_spec)
-//{
-//    auto sequence_data = plyometrics::sequence_range(1024 * 1024);
-//    auto v = loop.type(sequence_data.begin(), sequence_data.end());
-//
-//    while (loop)
-//    {
-//        for (auto e : v)
-//            plyometrics::use(&e);
-//    }
-//}
+NBENCHMARK_P(iterating_many, vectors_spec)
+{
+    auto sequence_data = plyometrics::sequence_range(1024);
+    auto v = loop.type(sequence_data.begin(), sequence_data.end());
+
+    while (loop)
+        for (auto e : v)
+            plyometrics::use(&e);
+}
 
 int main(int argc, const char* argv[])
 {
