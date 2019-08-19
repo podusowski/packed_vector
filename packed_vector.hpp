@@ -38,6 +38,13 @@ struct packed_vector
 
     void push_back(T value)
     {
+        reallocate(size() + 1);
+        *std::prev(end()) = value;
+    }
+
+    std::size_t size()
+    {
+        return std::distance(begin(), end());
     }
 
     iterator begin()
@@ -61,12 +68,21 @@ private:
         return std::next(reinterpret_cast<E*>(p));
     }
 
+    metadata_t<T>* allocate_new(std::size_t size)
+    {
+        void* raw = ::operator new(size * sizeof(T) + sizeof(metadata_t<T>));
+        metadata_t<T>* storage = new (raw) metadata_t<T>{};
+        storage->_begin = new (next<metadata_t<T>>(storage)) T[size];
+        storage->_end = std::next(storage->_begin, size);
+        return storage;
+    }
+
     void reallocate(std::size_t new_size)
     {
-        void* st = ::operator new(new_size * sizeof(T) + sizeof(metadata_t<T>));
-        _storage = new (st) metadata_t<T>{};
-        _storage->_begin = new (next<metadata_t<T>>(_storage)) T[new_size];
-        _storage->_end = std::next(_storage->_begin, new_size);
+        auto* new_storage = allocate_new(new_size);
+        if (_storage)
+            std::copy(_storage->_begin, _storage->_end, new_storage->_begin);
+        _storage = new_storage;
     }
 
     metadata_t<T>* _storage;
