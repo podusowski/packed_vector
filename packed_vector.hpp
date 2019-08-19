@@ -18,6 +18,12 @@ struct packed_vector
     {
     }
 
+    ~packed_vector()
+    {
+        if (_storage)
+            operator delete(_storage);
+    }
+
     packed_vector(std::initializer_list<T>&& values)
     {
         reallocate(values.size());
