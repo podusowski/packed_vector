@@ -6,6 +6,7 @@ template<class T>
 struct packed_vector
 {
     using iterator = T*;
+    using value_type = T;
 
     struct metadata_t
     {
@@ -29,11 +30,11 @@ struct packed_vector
         std::copy(std::begin(values), std::end(values), begin());
     }
 
-    //template<class It>
-    //packed_vector(It&& begin, It&& end)
-    //{
-    //    std::copy(std::begin(values), std::end(values), std::back_inserter(*this));
-    //}
+    template<class It>
+    packed_vector(It&& begin, It&& end) : packed_vector()
+    {
+        std::copy(begin, end, std::back_inserter(*this));
+    }
 
     void push_back(T value)
     {

@@ -33,9 +33,17 @@ TEST_CASE("some basics on few elements")
     check_three_elements(v);
 }
 
+TEST_CASE("elements inserted from pair of iterators")
+{
+    std::vector<int> source{1, 2, 3};
+    packed_vector<int> v(source.begin(), source.end());
+    check_three_elements(v);
+}
+
 TEST_CASE("dynamic insert")
 {
     packed_vector<int> v;
+    REQUIRE(v.size() == 0);
     REQUIRE(v.begin() == v.end());
 
     v.push_back(1);
@@ -47,4 +55,10 @@ TEST_CASE("dynamic insert")
     REQUIRE(v.size() == 2);
     REQUIRE(*std::begin(v) == 1);
     REQUIRE(*std::next(v.begin()) == 2);
+
+    v.push_back(3);
+    REQUIRE(v.size() == 3);
+
+    v.push_back(4);
+    REQUIRE(v.size() == 4);
 }
