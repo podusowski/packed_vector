@@ -21,7 +21,11 @@ struct packed_vector
     ~packed_vector()
     {
         if (_storage)
+        {
+            for (auto& o : *this)
+                o.~T();
             operator delete(_storage);
+        }
     }
 
     packed_vector(std::initializer_list<T>&& values) : packed_vector()
@@ -92,4 +96,4 @@ private:
 };
 
 // the main reason why you might be interested in this class
-static_assert(sizeof(packed_vector<int>) <= sizeof(void*));
+static_assert(sizeof(packed_vector<int>) <= sizeof(void*), "");

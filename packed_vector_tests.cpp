@@ -62,3 +62,28 @@ TEST_CASE("dynamic insert")
     v.push_back(4);
     REQUIRE(v.size() == 4);
 }
+
+struct Foo
+{
+    ~Foo()
+    {
+        destructors++;
+    }
+
+    static std::size_t destructors;
+};
+
+std::size_t Foo::destructors = 0;
+
+TEST_CASE("destructors are called upon exit")
+{
+    Foo::destructors = 0;
+
+    {
+        packed_vector<Foo> v{Foo{}, Foo{}};
+        REQUIRE(v.size() == 2);
+        REQUIRE(Foo::destructors == 0);
+    }
+
+    REQUIRE(Foo::destructors == 2);
+}
