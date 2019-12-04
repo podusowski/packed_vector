@@ -1,10 +1,7 @@
 #include <array>
 #include <memory>
 
-template<class... Args>
-void swallow(Args...)
-{
-}
+#include "common.hpp"
 
 struct fancy_abstract_class
 {
@@ -62,8 +59,6 @@ __attribute__((noinline)) void work(const Objects& objects, std::index_sequence<
 
 int main()
 {
-    constexpr std::size_t complexity = 1000;
-
     auto objects = fancy_factory_pattern(std::make_index_sequence<complexity>());
 
     for (int i = 0; i < 100000; i++)
