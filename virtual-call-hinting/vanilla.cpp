@@ -8,8 +8,6 @@ void swallow(Args...)
 
 struct fancy_abstract_class
 {
-    std::size_t tag = 0;
-
     virtual void foo() = 0;
     virtual ~fancy_abstract_class() = default;
 };
@@ -17,13 +15,6 @@ struct fancy_abstract_class
 template<std::size_t N>
 struct fancy_class final : public fancy_abstract_class
 {
-    static constexpr std::size_t s_tag = N;
-
-    fancy_class()
-    {
-        tag = N;
-    }
-
     __attribute__((noinline)) void foo() override
     {
         asm volatile("");
