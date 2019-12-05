@@ -25,13 +25,6 @@ __attribute__((noinline)) auto fancy_factory_pattern(std::index_sequence<Idx...>
     return objects;
 }
 
-template<class T>
-struct type_traits
-{
-    static constexpr std::size_t s_tag = T::s_tag;
-    using type = T;
-};
-
 template<class Likely>
 __attribute__((noinline)) void call(fancy_abstract_class& object)
 {

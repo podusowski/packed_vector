@@ -42,6 +42,5 @@ int main()
     auto objects = fancy_factory_pattern(std::make_index_sequence<complexity>());
 
     for (int i = 0; i < 100000; i++)
-        //work(objects);
         work(objects, std::make_index_sequence<complexity>());
 }
