@@ -18,7 +18,7 @@ You use `cmake` to build the examples:
 cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build
 ```
 
-Then you can compare the two version:
+Then you can compare the two versions:
 ```
 $ perf stat -e branches,branch-misses ./build/vanilla
 
@@ -32,7 +32,7 @@ $ perf stat -e branches,branch-misses ./build/vanilla
       14,593636000 seconds user
        0,000000000 seconds sys
 
-$ perf stat -e branches,branch-misses ./build/niceapi 
+$ perf stat -e branches,branch-misses ./build/niceapi
 
  Performance counter stats for './build/niceapi':
 
