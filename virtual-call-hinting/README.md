@@ -10,6 +10,28 @@ callq  *(%rax)
 This is problematic because it is impossible for CPU to even guess where the destination is going to be. Modern platform tries to overcome this by implementing _branch prediction_ algorithms which maintains some sort of history of the branch destination (it does `jmp`, `ret` or anything else that takes computated address). This works pretty well but it depends on how good is the algorithm and how big is the history buffer so it's safe to assume that it will behave better on some modern `CORE i7` than on say, `ARMv7`.
 
 
+What I've changed and why it's faster
+=====================================
+Dynamic branch predictor will do nothing for indirect calls when there is no history. Static predictor is a different thing though because it can make a guess, consider this branch:
+
+```
+cmp    %rdi,%rax
+je     1188 <foo+0x28>
+```
+
+There are only two options so CPU can at least try to guess which one will be taken. Usually it's assumed that branch is not taken, i.e. the jump will not occur. We can use that in cases where interfaces are introduced only to simplify writing unit tests and they have only two derived classes - implementation and the mock. The idea can be simply expressed in the pseudo-code:
+
+```
+class implementation
+class mock
+
+if class of an object == implementation:
+    implementation(object).foo()
+else
+    object.foo()
+```
+
+
 Quick start
 ===========
 You use `cmake` to build the examples:
