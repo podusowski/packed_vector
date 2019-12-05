@@ -30,7 +30,7 @@ $ perf stat -e branches,branch-misses ./build/vanilla
 
       14,593636000 seconds user
        0,000000000 seconds sys
-
+```
 
 ```
 $ perf stat -e branches,branch-misses ./build/niceapi 
