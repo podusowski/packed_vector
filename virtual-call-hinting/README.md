@@ -57,4 +57,4 @@ This helps with two things:
  - static prediction will usually be sufficient so we don't depend on branch history
  - compiler can do inlining (which will then enable other imptimizations)
 
-The caveat is that the code will probably be bigger which will cause higher load of the `icache` so as always, **you should measure** your particular system before deploying this solution.
+The caveat is that the code will probably be bigger which will cause higher load of the _instruction cache_ so as always, **you should measure** your particular system before deploying this solution.
