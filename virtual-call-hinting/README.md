@@ -45,7 +45,7 @@ callq  *(%rax)
 
 This is problematic because it is impossible for CPU to even guess where the destination is going to be. Modern platform tries to overcome this by implementing _branch prediction_ algorithms which maintains some sort of history of the branch destination (it does `jmp`, `ret` or anything else that takes computated address). This works pretty well but it depends on how good is the algorithm and how big is the history buffer so it's safe to assume that it will behave better on some modern `CORE i7` than on say, `ARMv7`.
 
-Dynamic branch predictor will do nothing for indirect calls when there is no history. Static predictor is a different thing though because it can make a guess, consider this branch:
+Dynamic branch predictor will do nothing for indirect calls when there is no history. _Static predictor_ is a different thing though. Consider this branch:
 
 ```
 cmp    %rdi,%rax
