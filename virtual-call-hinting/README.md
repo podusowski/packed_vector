@@ -1,6 +1,6 @@
 Quick start
 ===========
-You use `cmake` to build the examples:
+You can use `cmake` to build the examples:
 
 ```
 cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build
