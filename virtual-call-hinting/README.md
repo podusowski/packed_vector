@@ -7,30 +7,19 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build
 ```
 
 Then you can compare the two versions:
+
 ```
 $ perf stat -e branches,branch-misses ./build/vanilla
-
- Performance counter stats for './build/vanilla':
-
      3 004 419 337      branches
        987 260 519      branch-misses             #   32,86% of all branches
-
       14,594517772 seconds time elapsed
+```
 
-      14,593636000 seconds user
-       0,000000000 seconds sys
-
+```
 $ perf stat -e branches,branch-misses ./build/niceapi
-
- Performance counter stats for './build/niceapi':
-
      4 013 043 523      branches
            481 089      branch-misses             #    0,01% of all branches
-
       11,844777995 seconds time elapsed
-
-      11,843340000 seconds user
-       0,000000000 seconds sys
 ```
 
 
